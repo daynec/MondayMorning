@@ -19,6 +19,7 @@ public class MainController implements EventHandler<ActionEvent> {
 	public void handle( ActionEvent event )
 	{
 		//fromage et une pomme de terre
+		//une poisson c'est tres bon!
 		/*
 		// Have user use DirectoryChooser to select books
 		DirectoryChooser d = new DirectoryChooser();
