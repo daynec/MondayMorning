@@ -20,7 +20,7 @@ public class MainController implements EventHandler<ActionEvent> {
 	{
 		//fromage et une pomme de terre
 		//une poisson c'est tres bon!
-		//Et voila!!!
+		//Et voila!!! Hopefully it works!
 		/*
 		// Have user use DirectoryChooser to select books
 		DirectoryChooser d = new DirectoryChooser();
