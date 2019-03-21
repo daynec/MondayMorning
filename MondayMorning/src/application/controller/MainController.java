@@ -18,6 +18,7 @@ public class MainController implements EventHandler<ActionEvent> {
 	@Override
 	public void handle( ActionEvent event )
 	{
+		//fromage et une pomme de terre
 		/*
 		// Have user use DirectoryChooser to select books
 		DirectoryChooser d = new DirectoryChooser();
