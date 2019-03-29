@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.TitleController">
+   <children>
+      <Button fx:id="startButton" layoutX="344.0" layoutY="371.0" mnemonicParsing="false" onAction="#startGame" text="Start">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Button>
+      <Label alignment="CENTER" layoutX="196.0" layoutY="149.0" text="Monday Morning" textAlignment="CENTER">
+         <font>
+            <Font name="Impact" size="60.0" />
+         </font>
+      </Label>
+      <Button fx:id="quitButton" layoutX="355.0" layoutY="445.0" mnemonicParsing="false" onAction="#quitGame" text="Quit">
+         <font>
+            <Font name="Impact" size="30.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
