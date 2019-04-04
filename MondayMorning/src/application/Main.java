@@ -1,21 +1,23 @@
 package application;
 	
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 
 public class Main extends Application {
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage stage) {
+		Parent root;
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("../application/view/Title.fxml"));
-			primaryStage.setScene(new Scene(root));
-			primaryStage.show();
-		} catch(Exception e) {
+			root = FXMLLoader.load(getClass().getResource("/application/view/Title.fxml"));
+			stage.setScene(new Scene(root));
+			stage.show();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

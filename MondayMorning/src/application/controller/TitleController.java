@@ -1,22 +1,33 @@
 package application.controller;
 
+import java.io.IOException;
+
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class TitleController {
 	
-	@FXML private Button quitButton = new Button();
-	@FXML private Button startButton = new Button();
-	
 	@FXML
 	private void quitGame() {
-		Stage stage = (Stage) quitButton.getScene().getWindow();
-		stage.close();
+		Platform.exit();
 	}
 	
 	@FXML
-	private void startGame() {
-		System.out.println("Derp");
+	private void startGame(ActionEvent event) {
+		try {
+			Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+			Parent root = FXMLLoader.load(getClass().getResource("/application/view/Game.fxml"));
+			stage.setScene(new Scene(root));
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}	
 }
