@@ -9,15 +9,15 @@ import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
-
-
-public class Entity extends Canvas {
+public class Entity extends Canvas
+{
 	private Rectangle hitbox;
 	private Vector2 pos;
 	private Image sprite;
 	private ImageView view;
 	
-	public enum Coord {
+	public enum Coord
+	{
 		X, Y
 	}
 	
@@ -106,5 +106,4 @@ public class Entity extends Canvas {
 		}
 		return false;
 	}
-	
 }

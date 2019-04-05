@@ -24,7 +24,8 @@ import javafx.util.Duration;
 
 
 
-public class GameController implements Initializable{
+public class GameController implements Initializable
+{
 	
 	@FXML 
 	public Pane gamePane;
@@ -67,13 +68,10 @@ public class GameController implements Initializable{
 	}
 
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		
-		
+	public void initialize(URL arg0, ResourceBundle arg1)
+	{
+		Vector2 startPoint = new Vector2(0,0);
+		Entity player = new Entity(startPoint);
+		player.init("dogebread");
 	}
-	
-			
-		
-	}
-	
 }

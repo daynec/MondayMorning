@@ -12,7 +12,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class World {
+public class World
+{
 	private Entity e;
 	private Stage s;
 	
@@ -22,14 +23,17 @@ public class World {
 		s = stage;
 	}
 	
-	public void init() {
+	public void init()
+	{
 		e.init("lonk.png");
 		
 		final Duration aFrame = Duration.millis(1000/60);
-		final KeyFrame singleFrame = new KeyFrame(aFrame, new EventHandler() {
+		final KeyFrame singleFrame = new KeyFrame(aFrame, new EventHandler()
+		{
 
 			@Override
-			public void handle(Event arg0) {
+			public void handle(Event arg0)
+			{
 				
 			}
 		} );
