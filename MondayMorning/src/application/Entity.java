@@ -3,21 +3,50 @@ package application;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+
+import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 
-public class Entity {
+
+public class Entity extends Canvas {
 	private Rectangle hitbox;
 	private Vector2 pos;
 	private Image sprite;
 	private ImageView view;
 	
+	public enum Coord {
+		X, Y
+	}
+	
 	public Entity(Vector2 pos)
 	{
+
+		super(0.0f, 0.0f);
 		hitbox = new Rectangle();
 		view = new ImageView();
 		this.pos = pos;
 		
+	}
+	
+	public int getCord(Coord c)
+	{
+		switch(c)
+		{
+			case X:
+			{
+				return pos.getX();
+			} 
+			
+			case Y: 
+			{
+				return pos.getY();
+			}
+		}
+		
+		return 0;
 	}
 	
 	//Delay initilization of other parts of the entity class since it can bring down the whole program if something goes south.
@@ -27,6 +56,8 @@ public class Entity {
 		hitbox.setWidth(sprite.getWidth());
 		hitbox.setHeight(sprite.getHeight());
 		view.setImage(sprite);
+		super.setHeight(sprite.getHeight());
+		super.setWidth(sprite.getWidth());
 		Utils.Log("Successfully initilialized the entity.");
 	}
 	
@@ -34,6 +65,11 @@ public class Entity {
 	public ImageView getImageView()
 	{
 		return view;
+	}
+	
+	public Image getImage()
+	{
+		return sprite;
 	}
 	
 	public void move(Vector2 direction)
@@ -70,6 +106,5 @@ public class Entity {
 		}
 		return false;
 	}
-	
 	
 }
