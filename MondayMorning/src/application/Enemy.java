@@ -9,8 +9,8 @@ public class Enemy extends Entity {
 	
 	private boolean removable = false;
 	
-	public Enemy(Pane layer, Image image, double x, double y, double dx, double dy, double damage) {
-		super(layer, image, x, y, dx, dy);
+	public Enemy(Pane layer, Image image, double x, double y, double dx, double dy, double speed, double damage) {
+		super(layer, image, x, y, dx, dy, speed);
 		
 		this.damage = damage;
 	}
@@ -25,6 +25,16 @@ public class Enemy extends Entity {
 	
 	public boolean isRemovable() {
 		return removable;
+	}
+	
+	public void pathToPlayer(Player player) {
+		dx = player.getX() - x;
+		dy = player.getY() - y;
+		double norm = Math.sqrt(dx * dx + dy * dy);
+		if (norm != 0) {
+			dx *= (speed / norm);
+			dy *= (speed / norm);
+		}
 	}
 	
 }

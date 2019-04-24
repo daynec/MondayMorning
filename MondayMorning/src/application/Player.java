@@ -16,14 +16,11 @@ public class Player extends Entity {
 	private Input input;
 	
 	private double health;
-	
-	private double speed;
-	
-	public Player(Pane layer, Image image, double x, double y, double dx, double dy, double health, Input input, double speed) {
-		super(layer, image, x, y, dx, dy);
+		
+	public Player(Pane layer, Image image, double x, double y, double dx, double dy, double speed, double health, Input input) {
+		super(layer, image, x, y, dx, dy, speed);
 		
 		this.input = input;
-		this.speed = speed;
 		this.health = health;
 		
 		init();

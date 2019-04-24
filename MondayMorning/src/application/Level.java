@@ -22,6 +22,9 @@ public class Level {
 	
 	private int currTime = 60;
 	
+	private Timeline timeLoop;
+	private Timeline gameLoop;
+	
 	private Pane levelLayer;
 	private Pane infoLayer;
 	
@@ -58,10 +61,11 @@ public class Level {
 		
 		loadGame();
 		
-		Timeline timeLoop = new Timeline(new KeyFrame(Duration.seconds(1), event -> clockwork()));
+		timeLoop = new Timeline(new KeyFrame(Duration.seconds(1), event -> clockwork()));
+		
 		timeLoop.setCycleCount(Animation.INDEFINITE);
 		
-		Timeline gameLoop = new Timeline(new KeyFrame(Duration.millis(50), event -> gameUpdate()));
+		gameLoop = new Timeline(new KeyFrame(Duration.millis(50), event -> gameUpdate()));
 		gameLoop.setCycleCount(Animation.INDEFINITE);
 		
 		gameLoop.play();
@@ -73,6 +77,8 @@ public class Level {
 		if (currTime > 0) {
 			currTime--;
 			timer.setText(String.valueOf(currTime));
+		} else {
+			timeLoop.stop();
 		}
 	}
 	
@@ -82,7 +88,8 @@ public class Level {
 		createEnemies();
 		
 		player.move();
-		hazards.forEach(Entity -> Entity.move());
+		hazards.forEach(Enemy -> Enemy.pathToPlayer(player));
+		hazards.forEach(Enemy -> Enemy.move());
 		
 		checkCollisions();
 		removeEnemies(hazards);
@@ -132,7 +139,7 @@ public class Level {
 		double x = (Settings.SCENE_WIDTH - image.getWidth()) / 2.0;
 		double y = Settings.SCENE_HEIGHT * 0.7;
 		
-		player = new Player(levelLayer, image, x, y, 0, 0, Settings.PLAYER_HEALTH, input, Settings.PLAYER_SPEED);
+		player = new Player(levelLayer, image, x, y, 0, 0, Settings.PLAYER_SPEED, Settings.PLAYER_HEALTH, input);
 	}
 		
 	private void removeEnemies(ArrayList<Enemy> hazards) {
@@ -158,7 +165,7 @@ public class Level {
 		double x = rnd.nextDouble() * Settings.SCENE_WIDTH / 2.0;
 		double y = rnd.nextDouble() * Settings.SCENE_HEIGHT / 2.0;
 		
-		Enemy ghost = new Enemy(levelLayer, image, x, y, 0, 0, 10);
+		Enemy ghost = new Enemy(levelLayer, image, x, y, 0, 0, 4, 10);
 		
 		hazards.add(ghost);
 	}
