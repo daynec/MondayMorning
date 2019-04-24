@@ -1,52 +1,74 @@
-//package application;
-//
-//import java.util.HashMap;
-//import javafx.scene.Group;
-//import javafx.scene.Scene;
-//import javafx.scene.canvas.GraphicsContext;
-//import javafx.scene.input.KeyCode;
-//import javafx.scene.paint.Color;
-//import javafx.animation.Timeline;;
-//
-//*** CURRENTLY UNUSED***
-//
-////public class Level
-//{
-//	
-//	private Scene gameScene;
-//	private Group sceneNodes;
-//	private static Timeline gameLoop;
-//	private int fps;
-//	private OldEntity player;
-//	final int MOVEMENT_MULTIPLIER = 10;
-//	private HashMap<KeyCode, Integer> pressedKeys;
-//	
-//	public Level(double width, double height)
-//	{
-//		player = new OldEntity(new Vector2(0,0));
-//		sceneNodes = new Group();
-//		gameScene = new Scene(sceneNodes, width, height, Color.WHITE);
-//		pressedKeys = new HashMap<KeyCode, Integer>();
-//		gameScene.setOnKeyPressed(key -> {pressedKeys.put(key.getCode(), MOVEMENT_MULTIPLIER);});
-//		gameScene.setOnKeyReleased(key -> {pressedKeys.remove(key.getCode());});
-//	}
-//	
-//	public void init()
-//	{
-//		player.init("src/dogebread.jpg");
-//		Utils.Log("Successfully initalized the game world.");
-//	}
-//	
-//	public void update(double deltaTime) {
-//		
-//	}
-//	
-//	public void draw(GraphicsContext gc) {
-//		player.draw(gc);
-//	}
-//	
-//	public Scene getScene() { return s; }
-//	
-//	public Group getGroup() { return g; }
-//
-//}
+package application;
+
+import javafx.animation.AnimationTimer;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
+public class Level {
+		
+	Pane levelLayer;
+	
+	Image playerImage;
+	
+	Player player;
+	
+	Scene scene;
+	
+	boolean collision = false;
+	
+	public void start(Stage stage) {
+		
+		Group root = new Group();
+		
+		levelLayer = new Pane();
+		
+		root.getChildren().add(levelLayer);
+		
+		scene = new Scene( root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
+		
+		stage.setScene(scene);
+		stage.show();
+		
+		loadGame();
+				
+		AnimationTimer gameLoop = new AnimationTimer() {
+			
+			@Override
+			public void handle(long now) {
+				
+				player.processInput();
+				
+				player.move();
+				
+				checkCollisions();
+				
+				player.updateUI();
+				
+			}
+		};
+		
+		gameLoop.start();
+	}
+	
+	private void loadGame() {
+		playerImage = new Image("dogebread.jpg");
+		Input input = new Input(scene);
+		
+		input.addListeners();
+		
+		Image image = playerImage;
+		
+		double x = (Settings.SCENE_WIDTH - image.getWidth()) / 2.0;
+		double y = Settings.SCENE_HEIGHT * 0.7;
+		
+		player = new Player(levelLayer, image, x, y, 0, 0, Settings.PLAYER_HEALTH, input, Settings.PLAYER_SPEED);
+	}
+	
+	private void checkCollisions() {
+		collision = false;
+	}
+	
+}

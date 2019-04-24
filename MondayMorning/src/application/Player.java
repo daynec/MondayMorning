@@ -2,6 +2,7 @@ package application;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 /**
  * This class represents the player object
@@ -14,13 +15,16 @@ public class Player extends Entity {
 	
 	Input input;
 	
+	double health;
+	
 	double speed;
 	
-	public Player(Image image, ImageView imageView, double x, double y, double dx, double dy, Input input, double speed) {
-		super(image, imageView, x, y, dx, dy);
+	public Player(Pane layer, Image image, double x, double y, double dx, double dy, double health, Input input, double speed) {
+		super(layer, image, x, y, dx, dy);
 		
 		this.input = input;
 		this.speed = speed;
+		this.health = health;
 		
 		init();
 	}
@@ -30,6 +34,7 @@ public class Player extends Entity {
 		playerMaxX = Settings.SCENE_WIDTH - image.getWidth();
 		playerMinY = 0 - image.getHeight();
 		playerMaxY = Settings.SCENE_HEIGHT - image.getHeight();
+		System.out.println(playerMinX + " " + playerMaxX + " " + playerMinY + " " + playerMaxY);
 	}
 	
 	public void processInput() {

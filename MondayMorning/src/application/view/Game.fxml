@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.canvas.*?>
@@ -9,7 +10,7 @@
 
 <AnchorPane fx:id="gameAnchorPane" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.GameController">
    <children>
-      <ImageView fx:id="playerImageView" fitHeight="150.0" fitWidth="200.0" layoutX="56.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="201.0" layoutY="175.0" text="This scene is real!" />
+      <ImageView fx:id="playerImageView" fitHeight="150.0" fitWidth="200.0" layoutX="300.0" layoutY="306.0" pickOnBounds="true" preserveRatio="true" />
+      <Group fx:id="root" layoutX="128.0" layoutY="120.0" />
    </children>
 </AnchorPane>

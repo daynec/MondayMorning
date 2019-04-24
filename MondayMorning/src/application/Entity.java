@@ -2,6 +2,7 @@ package application;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 /**
  * This class is the baseline for any actor in the game
@@ -12,6 +13,8 @@ public class Entity {
 	Image image;
 	ImageView imageView;
 	
+	Pane layer;
+	
 	//Current coords
 	double x, y;
 	//Distance to move to
@@ -19,18 +22,27 @@ public class Entity {
 	//Width and height
 	double w, h;
 	
-	public Entity(Image image,ImageView imageView, double x, double y, double dx, double dy) {
+	double health, damage;
+	
+	public Entity(Pane layer, Image image, double x, double y, double dx, double dy) {
+		this.layer = layer;
 		this.image = image;
-		this.imageView = imageView;
 		this.x = x;
 		this.y = y;
 		this.dx = dx;
 		this.dy = dy;
 		
+		this.imageView = new ImageView(image);
 		this.imageView.relocate(x, y);
 		
 		this.w = image.getWidth();
 		this.h = image.getHeight();
+		
+		addToLayer();
+	}
+	
+	public void addToLayer() {
+		this.layer.getChildren().add(imageView);
 	}
 	
 	public void move() {

@@ -56,7 +56,6 @@ public class Input {
     };
     
     public boolean isUp() {
-    	System.out.println("Testing");
         return keysBitSet.get( upKey.ordinal()) && !keysBitSet.get( downKey.ordinal());
     }
 
