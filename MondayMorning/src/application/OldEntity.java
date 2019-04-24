@@ -9,25 +9,26 @@ import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
-public class Entity extends Canvas
+public class OldEntity extends Canvas
 {
 	private Rectangle hitbox;
-	private Vector2 pos;
+	private Vector2 position;
 	private Image sprite;
-	private ImageView view;
+	private ImageView icon;
 	
 	public enum Coord
 	{
 		X, Y
 	}
 	
-	public Entity(Vector2 pos)
+	public OldEntity(Vector2 pos)
 	{
 
 		super(0.0f, 0.0f);
 		hitbox = new Rectangle();
-		view = new ImageView();
-		this.pos = pos;
+		icon = new ImageView();
+		this.position = pos;
+		
 		
 	}
 	
@@ -37,25 +38,25 @@ public class Entity extends Canvas
 		{
 			case X:
 			{
-				return pos.getX();
+				return position.getX();
 			} 
 			
 			case Y: 
 			{
-				return pos.getY();
+				return position.getY();
 			}
 		}
 		
 		return 0;
 	}
 	
-	//Delay initilization of other parts of the entity class since it can bring down the whole program if something goes south.
+	//Delay initialization of other parts of the entity class since it can bring down the whole program if something goes south.
 	public void init(String assetPath)
 	{
 		sprite = Utils.loadAsset(assetPath);
 		hitbox.setWidth(sprite.getWidth());
 		hitbox.setHeight(sprite.getHeight());
-		view.setImage(sprite);
+		icon.setImage(sprite);
 		super.setHeight(sprite.getHeight());
 		super.setWidth(sprite.getWidth());
 		Utils.Log("Successfully initilialized the entity.");
@@ -64,7 +65,7 @@ public class Entity extends Canvas
 	
 	public ImageView getImageView()
 	{
-		return view;
+		return icon;
 	}
 	
 	public Image getImage()
@@ -72,29 +73,27 @@ public class Entity extends Canvas
 		return sprite;
 	}
 	
-	public void move(Vector2 direction)
+	public void move(int dx, int dy)
 	{
-		//TODO(brandon): check to see if we even need these temp vars
-		//also check if we can actually get away with the int -> double type cast and not lose anything meaningful
-		int x  = pos.getX();
-		int y = pos.getY();
-		pos.setX(x + direction.getX());
-		pos.setY(y + direction.getY());
+		int x  = position.getX();
+		int y = position.getY();
+		position.setX(x + dx);
+		position.setY(y + dy);
 		
 		//need to update the hitbox
-		hitbox.setX(pos.getX());
-		hitbox.setY(pos.getY());
+		hitbox.setX(position.getX());
+		hitbox.setY(position.getY());
 		
 		//should do the same for the image view until further notice
-		view.setX(pos.getX());
-		view.setY(pos.getY());
+		icon.setX(position.getX());
+		icon.setY(position.getY());
 		
 		
 	}
 	
 	public void draw(GraphicsContext gc)
 	{
-		gc.drawImage(sprite, pos.getX(), pos.getY());
+		gc.drawImage(sprite, position.getX(), position.getY());
 	}
 	
 	//Need this for collision detection

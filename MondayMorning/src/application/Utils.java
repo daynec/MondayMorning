@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 public class Utils {
 	
-	//simple logger utility so we dont litter the code with normal println's everywhere
+	//Simple logger utility so we don't litter the code with normal println's everywhere
 	public static void Log(String msg)
 	{
 		System.out.println("[+] " + msg);

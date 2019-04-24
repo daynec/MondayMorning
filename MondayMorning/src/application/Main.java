@@ -12,9 +12,9 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
-		Parent root;
 		try {
-			root = FXMLLoader.load(getClass().getResource("/application/view/Title.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/application/view/Title.fxml"));
+			stage.setTitle("Monday Morning");
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (IOException e) {
