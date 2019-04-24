@@ -27,7 +27,6 @@ public class GameController implements Initializable {
 	
 	@FXML private ImageView playerImageView;
 	private Player player;
-	private Scene gameScene;
 	boolean collision = false;
 	private Image playerSprite;
 	private Input input;
@@ -35,11 +34,6 @@ public class GameController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{
-		//Checking to see if the scene has loaded
-		if (gameScene == null) {
-			Utils.Log("Scene did not load");
-		}
-		
 		//Loads the player's sprite
 		playerSprite = Utils.loadAsset("src/dogebread.jpg");
 		
