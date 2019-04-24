@@ -5,7 +5,9 @@ import javafx.scene.layout.Pane;
 
 public class Enemy extends Entity {
 	
-	double damage;
+	private double damage;
+	
+	private boolean removable = false;
 	
 	public Enemy(Pane layer, Image image, double x, double y, double dx, double dy, double damage) {
 		super(layer, image, x, y, dx, dy);
@@ -15,6 +17,14 @@ public class Enemy extends Entity {
 	
 	public double getDamage() {
 		return damage;
+	}
+	
+	public void setRemovable(boolean removable) {
+		this.removable = removable;
+	}
+	
+	public boolean isRemovable() {
+		return removable;
 	}
 	
 }

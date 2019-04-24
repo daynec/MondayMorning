@@ -9,7 +9,7 @@ import javafx.scene.layout.Pane;
  * @author Torin Maguire - ztd721
  *
  */
-public class Entity {
+public abstract class Entity {
 	Image image;
 	ImageView imageView;
 	
@@ -23,7 +23,7 @@ public class Entity {
 	double w, h;
 	
 	double health, damage;
-	
+		
 	public Entity(Pane layer, Image image, double x, double y, double dx, double dy) {
 		this.layer = layer;
 		this.image = image;
@@ -43,6 +43,10 @@ public class Entity {
 	
 	public void addToLayer() {
 		this.layer.getChildren().add(imageView);
+	}
+	
+	public void removeFromLayer() {
+		this.layer.getChildren().remove(this.imageView);
 	}
 	
 	public void move() {

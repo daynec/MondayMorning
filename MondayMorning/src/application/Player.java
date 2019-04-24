@@ -11,13 +11,13 @@ import javafx.scene.layout.Pane;
  */
 public class Player extends Entity {
 
-	double playerMinX, playerMinY, playerMaxX, playerMaxY;
+	private double playerMinX, playerMinY, playerMaxX, playerMaxY;
 	
-	Input input;
+	private Input input;
 	
-	double health;
+	private double health;
 	
-	double speed;
+	private double speed;
 	
 	public Player(Pane layer, Image image, double x, double y, double dx, double dy, double health, Input input, double speed) {
 		super(layer, image, x, y, dx, dy);

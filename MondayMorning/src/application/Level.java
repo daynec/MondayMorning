@@ -1,13 +1,15 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
 
 import javafx.animation.Animation;
-import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -15,19 +17,24 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Level {
-		
-	Pane levelLayer;
-	Pane infoLayer;
 	
-	ProgressBar healthBar;
+	private Random rnd = new Random();
 	
-	Image playerImage;
-	Image ghostImage;
+	private int currTime = 60;
 	
-	Player player;
-	ArrayList<Enemy> hazards = new ArrayList<>();
+	private Pane levelLayer;
+	private Pane infoLayer;
 	
-	Scene scene;
+	private ProgressBar healthBar;
+	private Label timer;
+	
+	private Image playerImage;
+	private Image ghostImage;
+	
+	private Player player;
+	private ArrayList<Enemy> hazards = new ArrayList<>();
+	
+	private Scene scene;
 	
 	boolean collision = false;
 	
@@ -51,27 +58,48 @@ public class Level {
 		
 		loadGame();
 		
-		Timeline gameLoop = new Timeline(new KeyFrame(Duration.millis(50), event -> {
-
-			player.processInput();
-			
-			createEnemies();
-			
-			player.move();
-			hazards.forEach(Entity -> Entity.move());
-			
-			checkCollisions();
-			
-			hazards.forEach(Entity -> Entity.updateUI());
-			player.updateUI();
-			updateInfo();
-			
-		}));
+		Timeline timeLoop = new Timeline(new KeyFrame(Duration.seconds(1), event -> clockwork()));
+		timeLoop.setCycleCount(Animation.INDEFINITE);
+		
+		Timeline gameLoop = new Timeline(new KeyFrame(Duration.millis(50), event -> gameUpdate()));
 		gameLoop.setCycleCount(Animation.INDEFINITE);
+		
 		gameLoop.play();
+		timeLoop.play();
+		
 		}
 	
+	private void clockwork() {
+		if (currTime > 0) {
+			currTime--;
+			timer.setText(String.valueOf(currTime));
+		}
+	}
+	
+	private void gameUpdate() {
+		player.processInput();
+		
+		createEnemies();
+		
+		player.move();
+		hazards.forEach(Entity -> Entity.move());
+		
+		checkCollisions();
+		removeEnemies(hazards);
+		
+		hazards.forEach(Entity -> Entity.updateUI());
+		player.updateUI();
+		updateInfo();
+	}
+	
 	private void fillInfoLayer() {
+		timer = new Label();
+		timer.setText(String.valueOf(currTime));
+		
+		infoLayer.getChildren().add(timer);
+		
+		timer.relocate(225, 15);
+		
 		healthBar = new ProgressBar();
 		healthBar.setProgress(1);
 		healthBar.setStyle("-fx-accent: green;");
@@ -106,14 +134,31 @@ public class Level {
 		
 		player = new Player(levelLayer, image, x, y, 0, 0, Settings.PLAYER_HEALTH, input, Settings.PLAYER_SPEED);
 	}
+		
+	private void removeEnemies(ArrayList<Enemy> hazards) {
+		
+		Iterator<Enemy> removeChecklist = hazards.iterator();
+		while (removeChecklist.hasNext()) {
+			Enemy enemy = removeChecklist.next();
+			
+			if (enemy.isRemovable()) {
+				enemy.removeFromLayer();
+				removeChecklist.remove();
+			}
+		}
+	}
 	
 	private void createEnemies() {
+		if (rnd.nextInt(100) > 5) {
+			return;
+		}
+		
 		Image image = ghostImage;
 				
-		double x = Settings.SCENE_WIDTH / 2.0;
-		double y = Settings.SCENE_HEIGHT / 2.0;
+		double x = rnd.nextDouble() * Settings.SCENE_WIDTH / 2.0;
+		double y = rnd.nextDouble() * Settings.SCENE_HEIGHT / 2.0;
 		
-		Enemy ghost = new Enemy(levelLayer, image, x, y, 0, 0, 1);
+		Enemy ghost = new Enemy(levelLayer, image, x, y, 0, 0, 10);
 		
 		hazards.add(ghost);
 	}
@@ -125,6 +170,7 @@ public class Level {
 			if (player.collision(hazard)) {
 				collision = true;
 				player.getDamagedBy(hazard);
+				hazard.setRemovable(true);
 			}
 		}
 	}
