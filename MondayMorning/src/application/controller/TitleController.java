@@ -20,15 +20,15 @@ public class TitleController {
 	private void startGame(ActionEvent event) {
 		
 		try {
+		//Load stage and fxml
 		Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/Game.fxml"));
 		Parent root = loader.load();
+		//Retrieving the controller
 		GameController gControl = (GameController) loader.getController();
 		Scene gameScene = new Scene(root);
+		//Connecting the scene to the input listeners because the scene isn't available during GameController initialization
 		Input input = new Input(gameScene);
-		if (input.getScene() != null) {
-			System.out.println("FUCK");
-		}
 		gControl.setUp(input);
 		stage.setScene(gameScene);
 		stage.show();

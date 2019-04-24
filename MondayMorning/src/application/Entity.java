@@ -3,6 +3,11 @@ package application;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * This class is the baseline for any actor in the game
+ * @author Torin Maguire - ztd721
+ *
+ */
 public class Entity {
 	Image image;
 	ImageView imageView;

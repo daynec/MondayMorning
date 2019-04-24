@@ -3,6 +3,11 @@ package application;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * This class represents the player object
+ * @author Torin Maguire - ztd721
+ *
+ */
 public class Player extends Entity {
 
 	double playerMinX, playerMinY, playerMaxX, playerMaxY;

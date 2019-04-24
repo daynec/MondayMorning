@@ -7,6 +7,11 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+/**
+ * This class contains everything needed to record the player's inputs and tell the player class which way to move
+ * @author Torin Maguire - ztd721
+ *
+ */
 public class Input {
 	
 	private BitSet keysBitSet = new BitSet();
