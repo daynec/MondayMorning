@@ -6,14 +6,12 @@ import javafx.scene.layout.Pane;
 public class Enemy extends Entity {
 	
 	private double damage;
-	
-	private boolean removable = false;
-	
+		
 	public Enemy(Pane layer, Image image, double x, double y, double speed, double damage) {
+		
 		super(layer, image, x, y, speed);
 		
-		this.damage = damage;
-		
+		this.damage = damage;	
 	}
 	
 	/**
@@ -28,20 +26,6 @@ public class Enemy extends Entity {
 	 */
 	public void setDamage(double damage) {
 		this.damage = damage;
-	}
-
-	/**
-	 * @return the removable
-	 */
-	public boolean isRemovable() {
-		return removable;
-	}
-
-	/**
-	 * @param removable the removable to set
-	 */
-	public void setRemovable(boolean removable) {
-		this.removable = removable;
 	}
 
 	public void pathToPlayer(Player player) {

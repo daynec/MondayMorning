@@ -152,6 +152,12 @@ public class Player extends Entity {
 		}
 	}
 	
+	public void getHealedBy(SleepAid pillow) {
+		if (health < Settings.PLAYER_HEALTH) {
+			health += pillow.getHealing();
+		}
+	}
+	
 	private void checkBounds() {
 		if (Double.compare(y, playerMinY) < 0) {
 			y = playerMinY;

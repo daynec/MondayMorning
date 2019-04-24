@@ -16,6 +16,9 @@ public class GameObject {
 	protected double x, y;
 	//Width and height
 	protected double w, h;
+	//Whether this object should be removed by the game or not
+	protected boolean removable = false;
+
 	
 	public GameObject(Pane layer, Image image, double x, double y) {
 		
@@ -129,6 +132,20 @@ public class GameObject {
 	 */
 	public void setH(double h) {
 		this.h = h;
+	}
+	
+	/**
+	 * @return the removable
+	 */
+	public boolean isRemovable() {
+		return removable;
+	}
+
+	/**
+	 * @param removable the removable to set
+	 */
+	public void setRemovable(boolean removable) {
+		this.removable = removable;
 	}
 	
 	public double getCenterX() {

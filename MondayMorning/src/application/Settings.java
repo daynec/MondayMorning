@@ -14,4 +14,6 @@ public class Settings {
 	
 	public static double GHOST_SPEED = 4;
 	public static double GHOST_DAMAGE = 10;
+	
+	public static double PILLOW_HEALING = 10;
 }

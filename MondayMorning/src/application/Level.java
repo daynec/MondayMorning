@@ -33,9 +33,11 @@ public class Level {
 	
 	private Image playerImage;
 	private Image ghostImage;
+	private Image pillowImage;
 	
 	private Player player;
-	private ArrayList<Enemy> hazards = new ArrayList<>();
+	private ArrayList<Enemy> enemies = new ArrayList<>();
+	private ArrayList<SleepAid> sleepAids = new ArrayList<>();
 	
 	private Scene scene;
 	
@@ -61,8 +63,8 @@ public class Level {
 		
 		loadGame();
 		
-		timeLoop = new Timeline(new KeyFrame(Duration.seconds(1), event -> clockwork()));
-		gameLoop = new Timeline(new KeyFrame(Duration.millis(50), event -> gameUpdate()));
+		timeLoop = new Timeline(new KeyFrame(Duration.seconds(1), event -> clockEvent()));
+		gameLoop = new Timeline(new KeyFrame(Duration.millis(50), event -> gameUpdateEvent()));
 		
 		timeLoop.setCycleCount(Animation.INDEFINITE);
 		gameLoop.setCycleCount(Animation.INDEFINITE);
@@ -72,7 +74,7 @@ public class Level {
 		
 		}
 	
-	private void clockwork() {
+	private void clockEvent() {
 		
 		if (currTime > 0) {
 			currTime--;
@@ -83,20 +85,22 @@ public class Level {
 		
 	}
 	
-	private void gameUpdate() {
+	private void gameUpdateEvent() {
 		
 		player.processInput();
 		
 		createEnemies();
+		createSleepAids();
 		
 		player.move();
-		hazards.forEach(Enemy -> Enemy.pathToPlayer(player));
-		hazards.forEach(Enemy -> Enemy.move());
+		enemies.forEach(Enemy -> Enemy.pathToPlayer(player));
+		enemies.forEach(Enemy -> Enemy.move());
 		
 		checkCollisions();
-		removeEnemies(hazards);
+		removeEnemies(enemies);
+		removeSleepAids(sleepAids);
 		
-		hazards.forEach(Entity -> Entity.updateUI());
+		enemies.forEach(Entity -> Entity.updateUI());
 		player.updateUI();
 		updateInfo();
 		
@@ -137,6 +141,7 @@ public class Level {
 		
 		playerImage = new Image("bed.png");
 		ghostImage = new Image("Ghost.png");
+		pillowImage = new Image("pillow.png");
 		
 		Input input = new Input(scene);
 		
@@ -151,22 +156,58 @@ public class Level {
 		
 	}
 		
-	private void removeEnemies(ArrayList<Enemy> hazards) {
+	private void removeEnemies(ArrayList<Enemy> enemies) {
 		
-		Iterator<Enemy> removeChecklist = hazards.iterator();
+		Iterator<Enemy> garbageList = enemies.iterator();
 		
-		while (removeChecklist.hasNext()) {
+		while (garbageList.hasNext()) {
 		
-			Enemy enemy = removeChecklist.next();
+			Enemy garbage = garbageList.next();
 			
-			if (enemy.isRemovable()) {
+			if (garbage.isRemovable()) {
 				
-				enemy.removeFromLayer();
-				removeChecklist.remove();
+				garbage.removeFromLayer();
+				garbageList.remove();
 				
 			}
 			
 		}
+		
+	}
+	
+private void removeSleepAids(ArrayList<SleepAid> sleepAids) {
+		
+		Iterator<SleepAid> garbageList = sleepAids.iterator();
+		
+		while (garbageList.hasNext()) {
+		
+			SleepAid garbage = garbageList.next();
+			
+			if (garbage.isRemovable()) {
+				
+				garbage.removeFromLayer();
+				garbageList.remove();
+				
+			}
+			
+		}
+		
+	}
+	
+	private void createSleepAids() {
+		
+		if (rnd.nextInt(100) > 15) {
+			return;
+		}
+		
+		Image image = pillowImage;
+		
+		double x = rnd.nextDouble() * Settings.SCENE_WIDTH;
+		double y = rnd.nextDouble() * Settings.SCENE_HEIGHT;
+		
+		SleepAid pillow = new SleepAid(levelLayer, image, x, y, Settings.PILLOW_HEALING);
+		
+		sleepAids.add(pillow);
 		
 	}
 	
@@ -178,12 +219,12 @@ public class Level {
 		
 		Image image = ghostImage;
 				
-		double x = rnd.nextDouble() * Settings.SCENE_WIDTH / 2.0;
-		double y = rnd.nextDouble() * Settings.SCENE_HEIGHT / 2.0;
+		double x = rnd.nextDouble() * Settings.SCENE_WIDTH;
+		double y = rnd.nextDouble() * Settings.SCENE_HEIGHT;
 		
 		Enemy ghost = new Enemy(levelLayer, image, x, y, Settings.GHOST_SPEED, Settings.GHOST_DAMAGE);
 		
-		hazards.add(ghost);
+		enemies.add(ghost);
 		
 	}
 	
@@ -191,15 +232,29 @@ public class Level {
 		
 		collision = false;
 		
-		for (Enemy hazard: hazards) {
+		for (SleepAid sleepAid : sleepAids) {
 			
-			if (player.collision(hazard)) {
+			if (player.collision(sleepAid)) {
 				
 				collision = true;
 				
-				player.getDamagedBy(hazard);
+				player.getHealedBy(sleepAid);
 				
-				hazard.setRemovable(true);
+				sleepAid.setRemovable(true);
+				
+			}
+			
+		}
+		
+		for (Enemy enemy: enemies) {
+			
+			if (player.collision(enemy)) {
+				
+				collision = true;
+				
+				player.getDamagedBy(enemy);
+				
+				enemy.setRemovable(true);
 				
 			}
 			
