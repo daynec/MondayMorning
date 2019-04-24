@@ -30,11 +30,10 @@ public class Player extends Entity {
 	}
 	
 	private void init() {
-		playerMinX = 0 - image.getWidth();
+		playerMinX = 0;
 		playerMaxX = Settings.SCENE_WIDTH - image.getWidth();
-		playerMinY = 0 - image.getHeight();
+		playerMinY = 0;
 		playerMaxY = Settings.SCENE_HEIGHT - image.getHeight();
-		System.out.println(playerMinX + " " + playerMaxX + " " + playerMinY + " " + playerMaxY);
 	}
 	
 	public void processInput() {
@@ -59,6 +58,20 @@ public class Player extends Entity {
 	public void move() {
 		super.move();
 		checkBounds();
+	}
+	
+	public boolean isAlive() {
+		return Double.compare(health, 0) > 0;
+	}
+	
+	public void getDamagedBy(Enemy enemy) {
+		if (health > 0) {
+			health -= enemy.getDamage();
+		}
+	}
+	
+	public double getHealth() {
+		return health;
 	}
 	
 	private void checkBounds() {

@@ -3,17 +3,7 @@ package application.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.Input;
-import application.Player;
-import application.Utils;
-import javafx.animation.AnimationTimer;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 
 
 
