@@ -11,8 +11,11 @@ public class TitleController {
 	
 	@FXML
 	private void startGame(ActionEvent event) {
+		
 		Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		
 		Level levelOne = new Level();
+		
 		levelOne.start(stage);
 	}
 	

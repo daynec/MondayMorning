@@ -1,7 +1,6 @@
 package application;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 /**
@@ -9,88 +8,67 @@ import javafx.scene.layout.Pane;
  * @author Torin Maguire - ztd721
  *
  */
-public abstract class Entity {
-	protected Image image;
-	protected ImageView imageView;
+public abstract class Entity extends GameObject {
 	
-	protected Pane layer;
-	
-	//Current coordinates
-	protected double x, y;
-	//Distance to move to
 	protected double dx, dy;
-	//Width and height
-	protected double w, h;
-	
-	protected double health, damage;
 	
 	protected double speed;
 		
-	public Entity(Pane layer, Image image, double x, double y, double dx, double dy, double speed) {
-		this.layer = layer;
-		this.image = image;
-		this.x = x;
-		this.y = y;
-		this.dx = dx;
-		this.dy = dy;
+	public Entity(Pane layer, Image image, double x, double y, double speed) {
+		
+		super(layer, image, x, y);
+		
 		this.speed = speed;
+		this.dx = 0;
+		this.dy = 0;
 		
-		this.imageView = new ImageView(image);
-		this.imageView.relocate(x, y);
-		
-		this.w = image.getWidth();
-		this.h = image.getHeight();
-		
-		addToLayer();
+	}
+
+	/**
+	 * @return the dx
+	 */
+	public double getDx() {
+		return dx;
+	}
+
+	/**
+	 * @param dx the dx to set
+	 */
+	public void setDx(double dx) {
+		this.dx = dx;
+	}
+
+	/**
+	 * @return the dy
+	 */
+	public double getDy() {
+		return dy;
+	}
+
+	/**
+	 * @param dy the dy to set
+	 */
+	public void setDy(double dy) {
+		this.dy = dy;
 	}
 	
 	/**
-	 * @return the x
+	 * @return the speed
 	 */
-	public double getX() {
-		return x;
+	public double getSpeed() {
+		return speed;
 	}
 
 	/**
-	 * @param x the x to set
+	 * @param speed the speed to set
 	 */
-	public void setX(double x) {
-		this.x = x;
+	public void setSpeed(double speed) {
+		this.speed = speed;
 	}
 
-	/**
-	 * @return the y
-	 */
-	public double getY() {
-		return y;
-	}
-
-	/**
-	 * @param y the y to set
-	 */
-	public void setY(double y) {
-		this.y = y;
-	}
-
-	public void addToLayer() {
-		this.layer.getChildren().add(imageView);
-	}
-	
-	public void removeFromLayer() {
-		this.layer.getChildren().remove(this.imageView);
-	}
-	
 	public void move() {
 		x += dx;
 		y += dy;
-	}
-	
-	public void updateUI() {
-		imageView.relocate(x, y);
-	}
-	
-	public boolean collision(Entity colEntity) {
-		return ( colEntity.x + colEntity.w >= x && colEntity.y + colEntity.h >= y && colEntity.x <= x + w && colEntity.y <= y + h);
 	}
 	
 }

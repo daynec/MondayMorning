@@ -1,7 +1,6 @@
 package application;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 /**
@@ -17,15 +16,101 @@ public class Player extends Entity {
 	
 	private double health;
 		
-	public Player(Pane layer, Image image, double x, double y, double dx, double dy, double speed, double health, Input input) {
-		super(layer, image, x, y, dx, dy, speed);
+	public Player(Pane layer, Image image, double x, double y, double speed, double health, Input input) {
+		
+		super(layer, image, x, y, speed);
 		
 		this.input = input;
 		this.health = health;
 		
 		init();
+		
 	}
 	
+	/**
+	 * @return the playerMinX
+	 */
+	public double getPlayerMinX() {
+		return playerMinX;
+	}
+
+	/**
+	 * @param playerMinX the playerMinX to set
+	 */
+	public void setPlayerMinX(double playerMinX) {
+		this.playerMinX = playerMinX;
+	}
+
+	/**
+	 * @return the playerMinY
+	 */
+	public double getPlayerMinY() {
+		return playerMinY;
+	}
+
+	/**
+	 * @param playerMinY the playerMinY to set
+	 */
+	public void setPlayerMinY(double playerMinY) {
+		this.playerMinY = playerMinY;
+	}
+
+	/**
+	 * @return the playerMaxX
+	 */
+	public double getPlayerMaxX() {
+		return playerMaxX;
+	}
+
+	/**
+	 * @param playerMaxX the playerMaxX to set
+	 */
+	public void setPlayerMaxX(double playerMaxX) {
+		this.playerMaxX = playerMaxX;
+	}
+
+	/**
+	 * @return the playerMaxY
+	 */
+	public double getPlayerMaxY() {
+		return playerMaxY;
+	}
+
+	/**
+	 * @param playerMaxY the playerMaxY to set
+	 */
+	public void setPlayerMaxY(double playerMaxY) {
+		this.playerMaxY = playerMaxY;
+	}
+
+	/**
+	 * @return the input
+	 */
+	public Input getInput() {
+		return input;
+	}
+
+	/**
+	 * @param input the input to set
+	 */
+	public void setInput(Input input) {
+		this.input = input;
+	}
+
+	/**
+	 * @return the health
+	 */
+	public double getHealth() {
+		return health;
+	}
+
+	/**
+	 * @param health the health to set
+	 */
+	public void setHealth(double health) {
+		this.health = health;
+	}
+
 	private void init() {
 		playerMinX = 0;
 		playerMaxX = Settings.SCENE_WIDTH - image.getWidth();
@@ -65,10 +150,6 @@ public class Player extends Entity {
 		if (health > 0) {
 			health -= enemy.getDamage();
 		}
-	}
-	
-	public double getHealth() {
-		return health;
 	}
 	
 	private void checkBounds() {

@@ -62,10 +62,9 @@ public class Level {
 		loadGame();
 		
 		timeLoop = new Timeline(new KeyFrame(Duration.seconds(1), event -> clockwork()));
+		gameLoop = new Timeline(new KeyFrame(Duration.millis(50), event -> gameUpdate()));
 		
 		timeLoop.setCycleCount(Animation.INDEFINITE);
-		
-		gameLoop = new Timeline(new KeyFrame(Duration.millis(50), event -> gameUpdate()));
 		gameLoop.setCycleCount(Animation.INDEFINITE);
 		
 		gameLoop.play();
@@ -74,15 +73,18 @@ public class Level {
 		}
 	
 	private void clockwork() {
+		
 		if (currTime > 0) {
 			currTime--;
 			timer.setText(String.valueOf(currTime));
 		} else {
 			timeLoop.stop();
 		}
+		
 	}
 	
 	private void gameUpdate() {
+		
 		player.processInput();
 		
 		createEnemies();
@@ -97,9 +99,11 @@ public class Level {
 		hazards.forEach(Entity -> Entity.updateUI());
 		player.updateUI();
 		updateInfo();
+		
 	}
 	
 	private void fillInfoLayer() {
+		
 		timer = new Label();
 		timer.setText(String.valueOf(currTime));
 		
@@ -120,13 +124,17 @@ public class Level {
 		double y = 10;
 		
 		healthBar.relocate(x, y);
+		
 	}
 	
 	private void updateInfo() {
+		
 		healthBar.setProgress(player.getHealth() / Settings.PLAYER_HEALTH);
+		
 	}
 	
 	private void loadGame() {
+		
 		playerImage = new Image("bed.png");
 		ghostImage = new Image("Ghost.png");
 		
@@ -139,23 +147,31 @@ public class Level {
 		double x = (Settings.SCENE_WIDTH - image.getWidth()) / 2.0;
 		double y = Settings.SCENE_HEIGHT * 0.7;
 		
-		player = new Player(levelLayer, image, x, y, 0, 0, Settings.PLAYER_SPEED, Settings.PLAYER_HEALTH, input);
+		player = new Player(levelLayer, image, x, y, Settings.PLAYER_SPEED, Settings.PLAYER_HEALTH, input);
+		
 	}
 		
 	private void removeEnemies(ArrayList<Enemy> hazards) {
 		
 		Iterator<Enemy> removeChecklist = hazards.iterator();
+		
 		while (removeChecklist.hasNext()) {
+		
 			Enemy enemy = removeChecklist.next();
 			
 			if (enemy.isRemovable()) {
+				
 				enemy.removeFromLayer();
 				removeChecklist.remove();
+				
 			}
+			
 		}
+		
 	}
 	
 	private void createEnemies() {
+		
 		if (rnd.nextInt(100) > 5) {
 			return;
 		}
@@ -165,21 +181,30 @@ public class Level {
 		double x = rnd.nextDouble() * Settings.SCENE_WIDTH / 2.0;
 		double y = rnd.nextDouble() * Settings.SCENE_HEIGHT / 2.0;
 		
-		Enemy ghost = new Enemy(levelLayer, image, x, y, 0, 0, 4, 10);
+		Enemy ghost = new Enemy(levelLayer, image, x, y, Settings.GHOST_SPEED, Settings.GHOST_DAMAGE);
 		
 		hazards.add(ghost);
+		
 	}
 	
 	private void checkCollisions() {
+		
 		collision = false;
 		
 		for (Enemy hazard: hazards) {
+			
 			if (player.collision(hazard)) {
+				
 				collision = true;
+				
 				player.getDamagedBy(hazard);
+				
 				hazard.setRemovable(true);
+				
 			}
+			
 		}
+		
 	}
 	
 }
