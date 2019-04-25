@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -8,16 +9,18 @@
 
 <AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.WinController">
    <children>
-      <Label layoutX="209.0" layoutY="191.0" text="Congratulations!">
+      <ImageView fitHeight="800.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="win.png" />
+         </image></ImageView>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="160.0" layoutY="100.0" text="YOU LIVED" textAlignment="CENTER">
          <font>
-            <Font name="MS Gothic" size="50.0" />
+            <Font name="Nova Slim" size="96.0" />
          </font>
       </Label>
-      <Label layoutX="307.0" layoutY="259.0" text="You win!">
+      <Button fx:id="menuButton" layoutX="300.0" layoutY="370.0" mnemonicParsing="false" onAction="#returnMenu" prefHeight="50.0" prefWidth="200.0" text="Return">
          <font>
-            <Font name="Century Gothic" size="50.0" />
-         </font>
-      </Label>
-      <Button fx:id="menuButton" layoutX="383.0" layoutY="388.0" mnemonicParsing="false" onAction="#returnMenu" text="Menu" />
+            <Font name="Nova Round" size="30.0" />
+         </font></Button>
    </children>
 </AnchorPane>

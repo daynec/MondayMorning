@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -8,16 +10,28 @@
 
 <AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.LossController">
    <children>
-      <Label layoutX="125.0" layoutY="186.0" text="Better luck next time!">
+      <ImageView fx:id="bgImage" fitHeight="800.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="lose.png" />
+         </image></ImageView>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" layoutY="100.0" text="YOU DIED" textAlignment="CENTER">
          <font>
-            <Font name="MS Gothic" size="50.0" />
+            <Font name="Nova Slim" size="96.0" />
          </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="RED" />
+                  <Stop color="RED" offset="0.007662835249042145" />
+                  <Stop color="#a10000" offset="0.5523166251925583" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
       </Label>
-      <Label layoutX="309.0" layoutY="269.0" text="You lost!">
+      <Button fx:id="menuButton" layoutX="300.0" layoutY="370.0" mnemonicParsing="false" onAction="#returnMenu" prefHeight="50.0" prefWidth="200.0" text="Return">
          <font>
-            <Font name="MS PGothic" size="50.0" />
-         </font>
-      </Label>
-      <Button fx:id="menuButton" layoutX="377.0" layoutY="388.0" mnemonicParsing="false" onAction="#returnMenu" text="Menu" />
+            <Font name="Nova Round" size="30.0" />
+         </font></Button>
    </children>
 </AnchorPane>
