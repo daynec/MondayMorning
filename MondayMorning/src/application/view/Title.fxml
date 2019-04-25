@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.media.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -28,5 +29,6 @@
             <Font name="Nova Round" size="30.0" />
          </font>
       </Button>
+      <MediaView fx:id="titleMediaView" fitHeight="200.0" fitWidth="200.0" layoutX="300.0" layoutY="586.0" />
    </children>
 </AnchorPane>
