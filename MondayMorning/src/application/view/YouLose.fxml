@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.LossController">
+   <children>
+      <Label layoutX="125.0" layoutY="186.0" text="Better luck next time!">
+         <font>
+            <Font name="MS Gothic" size="50.0" />
+         </font>
+      </Label>
+      <Label layoutX="309.0" layoutY="269.0" text="You lost!">
+         <font>
+            <Font name="MS PGothic" size="50.0" />
+         </font>
+      </Label>
+      <Button fx:id="menuButton" layoutX="377.0" layoutY="388.0" mnemonicParsing="false" onAction="#returnMenu" text="Menu" />
+   </children>
+</AnchorPane>

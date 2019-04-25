@@ -1,17 +1,22 @@
 package application;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -22,11 +27,15 @@ public class Level {
 	
 	private int currTime = 60;
 	
+	private Stage stage;
+	
 	private Timeline timeLoop;
 	private Timeline gameLoop;
+	private Timeline painLoop;
 	
 	private Pane levelLayer;
 	private Pane infoLayer;
+	private Pane backgroundLayer;
 	
 	private ProgressBar healthBar;
 	private Label timer;
@@ -34,6 +43,7 @@ public class Level {
 	private Image playerImage;
 	private Image ghostImage;
 	private Image pillowImage;
+	private Image backgroundImage;
 	
 	private Player player;
 	private ArrayList<Enemy> enemies = new ArrayList<>();
@@ -45,15 +55,19 @@ public class Level {
 	
 	public void start(Stage stage) {
 		
+		this.stage = stage;
+		
 		Group root = new Group();
 		
 		levelLayer = new Pane();
 		infoLayer = new Pane();
+		backgroundLayer = new Pane();
 		
 		fillInfoLayer();
 		
 		root.getChildren().add(levelLayer);
 		root.getChildren().add(infoLayer);
+		root.getChildren().add(backgroundLayer);
 		
 		scene = new Scene( root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
 		
@@ -63,17 +77,20 @@ public class Level {
 		
 		loadGame();
 		
+		painLoop = new Timeline(new KeyFrame(Duration.seconds(5), event ->  {player.setHealth(player.getHealth() - 10);}));
 		timeLoop = new Timeline(new KeyFrame(Duration.seconds(1), event -> clockEvent()));
 		gameLoop = new Timeline(new KeyFrame(Duration.millis(50), event -> gameUpdateEvent()));
 		
+		painLoop.setCycleCount(Animation.INDEFINITE);
 		timeLoop.setCycleCount(Animation.INDEFINITE);
 		gameLoop.setCycleCount(Animation.INDEFINITE);
 		
+		painLoop.play();
 		gameLoop.play();
 		timeLoop.play();
 		
 		}
-	
+		
 	private void clockEvent() {
 		
 		if (currTime > 0) {
@@ -81,6 +98,17 @@ public class Level {
 			timer.setText(String.valueOf(currTime));
 		} else {
 			timeLoop.stop();
+			
+			try {
+				Parent root = FXMLLoader.load(getClass().getResource("/application/view/YouWin.fxml"));
+				stage.setTitle("Monday Morning");
+				stage.setScene(new Scene(root));
+				stage.show();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 	}
@@ -103,6 +131,18 @@ public class Level {
 		enemies.forEach(Entity -> Entity.updateUI());
 		player.updateUI();
 		updateInfo();
+		
+		if (player.getHealth() == 0) {
+			try {
+				Parent root = FXMLLoader.load(getClass().getResource("/application/view/YouLose.fxml"));
+				stage.setTitle("Monday Morning");
+				stage.setScene(new Scene(root));
+				stage.show();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 	}
 	
@@ -142,7 +182,11 @@ public class Level {
 		playerImage = new Image("bed.png");
 		ghostImage = new Image("Ghost.png");
 		pillowImage = new Image("pillow.png");
+		backgroundImage = new Image("LevelOneBackground.png");
 		
+		ImageView backgroundImageView = new ImageView(backgroundImage);
+		backgroundLayer.getChildren().add(backgroundImageView);
+		backgroundLayer.toBack();
 		Input input = new Input(scene);
 		
 		input.addListeners();
@@ -196,13 +240,13 @@ private void removeSleepAids(ArrayList<SleepAid> sleepAids) {
 	
 	private void createSleepAids() {
 		
-		if (rnd.nextInt(100) > 15) {
+		if (rnd.nextInt(100) > 1 || sleepAids.size() > 5) {
 			return;
 		}
 		
 		Image image = pillowImage;
 		
-		double x = rnd.nextDouble() * Settings.SCENE_WIDTH;
+		double x = rnd.nextDouble() * Settings.SCENE_WIDTH - 20;
 		double y = rnd.nextDouble() * Settings.SCENE_HEIGHT;
 		
 		SleepAid pillow = new SleepAid(levelLayer, image, x, y, Settings.PILLOW_HEALING);
@@ -213,14 +257,13 @@ private void removeSleepAids(ArrayList<SleepAid> sleepAids) {
 	
 	private void createEnemies() {
 		
-		if (rnd.nextInt(100) > 5) {
+		if (rnd.nextInt(100) > 20 || enemies.size() > 100) {
 			return;
 		}
 		
 		Image image = ghostImage;
-				
-		double x = rnd.nextDouble() * Settings.SCENE_WIDTH;
-		double y = rnd.nextDouble() * Settings.SCENE_HEIGHT;
+		double x = ThreadLocalRandom.current().nextDouble(50 ,Settings.SCENE_WIDTH - 50);
+		double y = ThreadLocalRandom.current().nextDouble(50, Settings.SCENE_HEIGHT - 50);
 		
 		Enemy ghost = new Enemy(levelLayer, image, x, y, Settings.GHOST_SPEED, Settings.GHOST_DAMAGE);
 		

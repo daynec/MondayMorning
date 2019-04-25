@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.WinController">
+   <children>
+      <Label layoutX="209.0" layoutY="191.0" text="Congratulations!">
+         <font>
+            <Font name="MS Gothic" size="50.0" />
+         </font>
+      </Label>
+      <Label layoutX="307.0" layoutY="259.0" text="You win!">
+         <font>
+            <Font name="Century Gothic" size="50.0" />
+         </font>
+      </Label>
+      <Button fx:id="menuButton" layoutX="383.0" layoutY="388.0" mnemonicParsing="false" onAction="#returnMenu" text="Menu" />
+   </children>
+</AnchorPane>
