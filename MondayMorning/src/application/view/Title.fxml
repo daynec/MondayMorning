@@ -11,7 +11,7 @@
    <children>
       <ImageView fitHeight="800.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="titlebgb.png" />
+            <Image url="/application/assets/textures/titlebgb.png" />
          </image></ImageView>
       <Button fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" layoutX="300.0" layoutY="370.0" mnemonicParsing="false" onAction="#startGame" prefHeight="50.0" prefWidth="200.0" text="Play" textAlignment="CENTER">
          <font>

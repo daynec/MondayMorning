@@ -179,10 +179,10 @@ public class Level {
 	
 	private void loadGame() {
 		
-		playerImage = new Image("bed.png");
-		ghostImage = new Image("Ghost.png");
-		pillowImage = new Image("pillow.png");
-		backgroundImage = new Image("LevelOneBackground.png");
+		playerImage = new Image("/application/assets/textures/bed.png"); //"/application/view/YouLose.fxml"
+		ghostImage = new Image("/application/assets/textures/Ghost.png");
+		pillowImage = new Image("/application/assets/textures/pillow.png");
+		backgroundImage = new Image("/application/assets/textures/LevelOneBackground.png");
 		
 		ImageView backgroundImageView = new ImageView(backgroundImage);
 		backgroundLayer.getChildren().add(backgroundImageView);

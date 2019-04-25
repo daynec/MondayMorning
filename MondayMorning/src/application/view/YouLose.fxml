@@ -12,7 +12,7 @@
    <children>
       <ImageView fx:id="bgImage" fitHeight="800.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="lose.png" />
+            <Image url="/application/assets/textures/lose.png" />
          </image></ImageView>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" layoutY="100.0" text="YOU DIED" textAlignment="CENTER">
          <font>
