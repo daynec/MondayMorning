@@ -1,7 +1,9 @@
 package application;
 
+import javafx.animation.PauseTransition;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 public class Enemy extends Entity {
 	
@@ -12,6 +14,12 @@ public class Enemy extends Entity {
 		super(layer, image, x, y, speed);
 		
 		this.damage = damage;	
+		
+		PauseTransition fox = new PauseTransition(Duration.seconds(5));
+		fox.setOnFinished(die -> {
+			this.setRemovable(true);
+		});
+		fox.play();
 	}
 	
 	/**

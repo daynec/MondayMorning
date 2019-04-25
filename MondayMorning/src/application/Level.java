@@ -257,7 +257,7 @@ private void removeSleepAids(ArrayList<SleepAid> sleepAids) {
 	
 	private void createEnemies() {
 		
-		if (rnd.nextInt(100) > 20 || enemies.size() > 100) {
+		if (rnd.nextInt(100) > 5 || enemies.size() > 10) {
 			return;
 		}
 		
@@ -266,7 +266,7 @@ private void removeSleepAids(ArrayList<SleepAid> sleepAids) {
 		double y = ThreadLocalRandom.current().nextDouble(50, Settings.SCENE_HEIGHT - 50);
 		
 		Enemy ghost = new Enemy(levelLayer, image, x, y, Settings.GHOST_SPEED, Settings.GHOST_DAMAGE);
-		
+				
 		enemies.add(ghost);
 		
 	}
