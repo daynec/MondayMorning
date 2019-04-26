@@ -93,12 +93,16 @@ public class Level {
 		
 	private void clockEvent() {
 		
+		//Stops if the player's health hits zero
+		if (player.getHealth() == 0) {
+			timeLoop.stop();
+		}
+		
 		if (currTime > 0) {
 			currTime--;
 			timer.setText(String.valueOf(currTime));
 		} else {
 			timeLoop.stop();
-			
 			try {
 				Parent root = FXMLLoader.load(getClass().getResource("/application/view/YouWin.fxml"));
 				stage.setTitle("Monday Morning");
