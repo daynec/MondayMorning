@@ -29,7 +29,7 @@ public class TitleController implements Initializable
 	@FXML
 	private void startGame(ActionEvent event)
 	{	
-		titleSound.stopSound();
+		this.titleSound.stopSound();
 		String musicFile = "src/application/assets/sounds/UI04.wav";
 		Media sound = new Media(new File(musicFile).toURI().toString());
 		MediaPlayer mediaPlayer = new MediaPlayer(sound);
