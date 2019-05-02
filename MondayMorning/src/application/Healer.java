@@ -3,11 +3,11 @@ package application;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
-public class SleepAid extends GameObject {
+public class Healer extends GameObject {
 	
 	private double healing;
 
-	public SleepAid(Pane layer, Image image, double x, double y, double healing) {
+	public Healer(Pane layer, Image image, double x, double y, double healing) {
 		
 		super(layer, image, x, y);
 		

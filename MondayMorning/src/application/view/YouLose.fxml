@@ -10,10 +10,7 @@
 
 <AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.LossController">
    <children>
-      <ImageView fx:id="bgImage" fitHeight="800.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="/application/assets/textures/lose.png" />
-         </image></ImageView>
+      <ImageView fx:id="loseImageView" fitHeight="800.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" layoutY="100.0" text="YOU DIED" textAlignment="CENTER">
          <font>
             <Font name="Nova Slim" size="96.0" />

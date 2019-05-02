@@ -25,7 +25,7 @@ public class Level {
 	
 	private Random rnd = new Random();
 	
-	private int currTime = 60;
+	private int currTime = Settings.LEVEL_ONE_TIME;
 	
 	private Stage stage;
 	
@@ -47,7 +47,7 @@ public class Level {
 	
 	private Player player;
 	private ArrayList<Enemy> enemies = new ArrayList<>();
-	private ArrayList<SleepAid> sleepAids = new ArrayList<>();
+	private ArrayList<Healer> healers = new ArrayList<>();
 	
 	private Scene scene;
 	
@@ -93,9 +93,11 @@ public class Level {
 		
 	private void clockEvent() {
 		
-		//Stops if the player's health hits zero
-		if (player.getHealth() == 0) {
+		//Shuts down game if player wins or loses
+		if (player.getHealth() == 0 || currTime == 0) {
 			timeLoop.stop();
+			gameLoop.stop();
+			painLoop.stop();
 		}
 		
 		if (currTime > 0) {
@@ -109,7 +111,6 @@ public class Level {
 				stage.setScene(new Scene(root));
 				stage.show();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -122,7 +123,7 @@ public class Level {
 		player.processInput();
 		
 		createEnemies();
-		createSleepAids();
+		createHealers();
 		
 		player.move();
 		enemies.forEach(Enemy -> Enemy.pathToPlayer(player));
@@ -130,7 +131,7 @@ public class Level {
 		
 		checkCollisions();
 		removeEnemies(enemies);
-		removeSleepAids(sleepAids);
+		removeHealers(healers);
 		
 		enemies.forEach(Entity -> Entity.updateUI());
 		player.updateUI();
@@ -223,13 +224,13 @@ public class Level {
 		
 	}
 	
-private void removeSleepAids(ArrayList<SleepAid> sleepAids) {
+private void removeHealers(ArrayList<Healer> healers) {
 		
-		Iterator<SleepAid> garbageList = sleepAids.iterator();
+		Iterator<Healer> garbageList = healers.iterator();
 		
 		while (garbageList.hasNext()) {
 		
-			SleepAid garbage = garbageList.next();
+			Healer garbage = garbageList.next();
 			
 			if (garbage.isRemovable()) {
 				
@@ -242,9 +243,9 @@ private void removeSleepAids(ArrayList<SleepAid> sleepAids) {
 		
 	}
 	
-	private void createSleepAids() {
+	private void createHealers() {
 		
-		if (rnd.nextInt(100) > 1 || sleepAids.size() > 5) {
+		if (rnd.nextInt(100) > 1 || healers.size() > 5) {
 			return;
 		}
 		
@@ -253,9 +254,9 @@ private void removeSleepAids(ArrayList<SleepAid> sleepAids) {
 		double x = rnd.nextDouble() * Settings.SCENE_WIDTH - 20;
 		double y = rnd.nextDouble() * Settings.SCENE_HEIGHT;
 		
-		SleepAid pillow = new SleepAid(levelLayer, image, x, y, Settings.PILLOW_HEALING);
+		Healer pillow = new Healer(levelLayer, image, x, y, Settings.PILLOW_HEALING);
 		
-		sleepAids.add(pillow);
+		healers.add(pillow);
 		
 	}
 	
@@ -279,15 +280,15 @@ private void removeSleepAids(ArrayList<SleepAid> sleepAids) {
 		
 		collision = false;
 		
-		for (SleepAid sleepAid : sleepAids) {
+		for (Healer healer : healers) {
 			
-			if (player.collision(sleepAid)) {
+			if (player.collision(healer)) {
 				
 				collision = true;
 				
-				player.getHealedBy(sleepAid);
+				player.getHealedBy(healer);
 				
-				sleepAid.setRemovable(true);
+				healer.setRemovable(true);
 				
 			}
 			

@@ -1,10 +1,13 @@
 package application.controller;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,16 +16,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-public class LossController
+public class LossController implements Initializable
 {
-	@FXML 
-	private Button menuButton = new Button();
 	
-	/*Image image = new Image( "bg.png" );
-	private ImageView bgImage = new ImageView();
-
-	bgImage.setImage(image);
-	*/
+	@FXML private ImageView loseImageView = new ImageView();
 	
 	@FXML
 	private void returnMenu(ActionEvent event)
@@ -41,20 +38,9 @@ public class LossController
 		stage.setScene(new Scene(root));
 		stage.show();
 	}
-	
-	//@Override
-	/*@FXML
-	public void setLoseImage()
-	{
-		try
-		{
-			//set the background image
-			Image image = new Image( "/application/bg.png" );
-			bgImage.setImage( image );
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}*/
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		loseImageView.setImage(new Image("/application/assets/textures/lose.png"));	
+	}
 }

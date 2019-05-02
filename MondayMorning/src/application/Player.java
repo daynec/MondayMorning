@@ -152,7 +152,7 @@ public class Player extends Entity {
 		}
 	}
 	
-	public void getHealedBy(SleepAid pillow) {
+	public void getHealedBy(Healer pillow) {
 		if (health < Settings.PLAYER_HEALTH) {
 			health += pillow.getHealing();
 		}

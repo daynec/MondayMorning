@@ -9,10 +9,7 @@
 
 <AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.WinController">
    <children>
-      <ImageView fitHeight="800.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="/application/assets/textures/win.png" />
-         </image></ImageView>
+      <ImageView fx:id="winImageView" fitHeight="800.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="160.0" layoutY="100.0" text="YOU LIVED" textAlignment="CENTER">
          <font>
             <Font name="Nova Slim" size="96.0" />
