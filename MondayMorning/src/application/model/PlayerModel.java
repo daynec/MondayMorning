@@ -1,6 +1,9 @@
 package application.model;
 
+import application.Sound;
+
 import application.Settings;
+
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
@@ -16,6 +19,8 @@ public class PlayerModel extends Entity {
 	private Input input;
 	
 	private double health;
+	
+	private Sound playerSound; //WIP
 		
 	public PlayerModel(Pane layer, Image image, double x, double y, double speed, double health, Input input) {
 		

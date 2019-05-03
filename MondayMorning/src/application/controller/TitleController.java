@@ -16,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -36,7 +35,7 @@ public class TitleController implements Initializable
 	private void startGame(ActionEvent event)
 	{	
 		this.titleSound.stopSound();
-		String musicFile = "src/application/assets/sounds/UI04.wav";
+		String musicFile = "src/application/assets/sounds/UI04.wav"; //click sound
 		Media sound = new Media(new File(musicFile).toURI().toString());
 		MediaPlayer mediaPlayer = new MediaPlayer(sound);
 		
@@ -53,7 +52,7 @@ public class TitleController implements Initializable
 	@FXML
 	private void quitGame()
 	{
-		String musicFile = "src/application/assets/sounds/UI01.wav";
+		String musicFile = "src/application/assets/sounds/UI04.wav";
 		Media sound = new Media(new File(musicFile).toURI().toString());
 		MediaPlayer mediaPlayer = new MediaPlayer(sound);
 		
@@ -64,11 +63,22 @@ public class TitleController implements Initializable
 		delay.setOnFinished(event -> Platform.exit());
 		delay.play();
 	}
+	
+	@FXML
+	private void hoverButton()
+	{
+		String soundFile = "src/application/assets/sounds/UI01.wav"; //hover sound
+		Media sound = new Media(new File(soundFile).toURI().toString());
+		MediaPlayer mediaPlayer = new MediaPlayer(sound);
+		
+		Sound buttonSound = new Sound( soundFile, sound, mediaPlayer );
+		buttonSound.playSound( 0 );
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{
-		titleSound.playSound( 1 );
-		titleImageView.setImage(new Image("/application/assets/textures/titlebgb.png"));
+		this.titleSound.playSound( 1 );
+		this.titleImageView.setImage(new Image("/application/assets/textures/titlebgb.png"));
 	}
 }

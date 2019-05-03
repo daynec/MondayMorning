@@ -15,7 +15,7 @@
             <Font name="Nova Slim" size="96.0" />
          </font>
       </Label>
-      <Button fx:id="menuButton" layoutX="300.0" layoutY="370.0" mnemonicParsing="false" onAction="#returnMenu" prefHeight="50.0" prefWidth="200.0" text="Return">
+      <Button fx:id="menuButton" layoutX="300.0" layoutY="370.0" mnemonicParsing="false" onAction="#returnMenu" onMouseEntered="#hoverButton" prefHeight="50.0" prefWidth="200.0" text="Return">
          <font>
             <Font name="Nova Round" size="30.0" />
          </font></Button>

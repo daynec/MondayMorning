@@ -1,18 +1,12 @@
 package application;
 
-import java.io.File;
-
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 
 /**
  * 
  * @author Dayne Closser | ehh448
- * Adds sounds and music to the game. Work in progress.
+ * Adds sounds and music to the game.
  */
 public class Sound
 {
