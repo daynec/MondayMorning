@@ -1,4 +1,4 @@
-package application;
+package application.model;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,12 +6,10 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import application.Settings;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -24,17 +22,24 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class GameModel {
+public class LevelModel {
 	
 	private Random rnd = new Random();
 	
 	private int currTime = Settings.LEVEL_ONE_TIME;
 	
-	private final IntegerProperty time = new SimpleIntegerProperty();
+	private Stage stage;
 	
 	private Timeline timeLoop;
 	private Timeline gameLoop;
 	private Timeline painLoop;
+	
+	private Pane levelLayer;
+	private Pane infoLayer;
+	private Pane backgroundLayer;
+	
+	private ProgressBar healthBar;
+	private Label timer;
 	
 	private Image playerImage;
 	private Image ghostImage;
@@ -45,22 +50,31 @@ public class GameModel {
 	private ArrayList<GhostModel> ghostModels = new ArrayList<>();
 	private ArrayList<PillowModel> pillowModels = new ArrayList<>();
 	
+	private Scene scene;
+	
 	boolean collision = false;
-	
-	public IntegerProperty timeProperty() {
-		return time;
-	}
-	
-	public final int getTime() {
-		return timeProperty().get();
-	}
-	
-	public final void setTime(int time) {
-		timeProperty().set(time);
-	}
 	
 	public void start(Stage stage) {
 		
+		this.stage = stage;
+		
+		Group root = new Group();
+		
+		levelLayer = new Pane();
+		infoLayer = new Pane();
+		backgroundLayer = new Pane();
+		
+		fillInfoLayer();
+		
+		root.getChildren().add(levelLayer);
+		root.getChildren().add(infoLayer);
+		root.getChildren().add(backgroundLayer);
+		
+		scene = new Scene( root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
+		
+		stage.setTitle("Level One");
+		stage.setScene(scene);
+		stage.show();
 		
 		loadGame();
 		
@@ -138,11 +152,43 @@ public class GameModel {
 		
 	}
 	
+	private void fillInfoLayer() {
+		
+		timer = new Label();
+		timer.setText(String.valueOf(currTime));
+		
+		infoLayer.getChildren().add(timer);
+		
+		timer.relocate(225, 15);
+		
+		healthBar = new ProgressBar();
+		healthBar.setProgress(1);
+		healthBar.setStyle("-fx-accent: green;");
+		healthBar.setPrefWidth(Settings.SCENE_WIDTH / 4);
+		healthBar.setPrefHeight(30);
+		
+		
+		infoLayer.getChildren().add(healthBar);
+		
+		double x = 15;
+		double y = 10;
+		
+		healthBar.relocate(x, y);
+		
+	}
+	
+	private void updateInfo() {
+		
+		healthBar.setProgress(playerModel.getHealth() / Settings.PLAYER_HEALTH);
+		
+	}
+	
 	private void loadGame() {
 		
 		playerImage = new Image("/application/assets/textures/bed.png"); //"/application/view/YouLose.fxml"
 		ghostImage = new Image("/application/assets/textures/Ghost.png");
 		pillowImage = new Image("/application/assets/textures/pillow.png");
+		backgroundImage = new Image("/application/assets/textures/LevelOneBackground.png");
 		
 		ImageView backgroundImageView = new ImageView(backgroundImage);
 		backgroundLayer.getChildren().add(backgroundImageView);

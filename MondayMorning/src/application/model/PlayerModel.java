@@ -1,5 +1,6 @@
-package application;
+package application.model;
 
+import application.Settings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 

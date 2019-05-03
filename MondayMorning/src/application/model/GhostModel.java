@@ -1,4 +1,4 @@
-package application;
+package application.model;
 
 import javafx.animation.PauseTransition;
 import javafx.scene.image.Image;
