@@ -1,5 +1,7 @@
 package application;
 
+import java.util.Random;
+
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -39,4 +41,31 @@ public class Sound
 	{
 		this.mediaPlayer.stop();
 	}
+	
+	/*public void playDamageSound()
+	{
+		//Choose a random number
+
+		Random rand = new Random();
+
+		// Obtain a number between [0 - 49].
+		int n = rand.nextInt(4);
+		
+		switch(n)
+		{
+			case 0: this.mediaPlayer.play(); // = "src/application/assets/sounds/Damage01.wav";
+					//this.playerSound.playSound( 0 );
+					break;
+			case 1: this.soundFile = "src/application/assets/sounds/Damage02.wav";
+					this.playerSound.playSound( 0 );
+					break;
+			case 2: this.soundFile = "src/application/assets/sounds/Damage03.wav";
+					this.playerSound.playSound( 0 );
+					break;
+			case 3: this.soundFile = "src/application/assets/sounds/Damage04.wav";
+					this.playerSound.playSound( 0 );
+					break;
+		}
+	}
+	*/
 }

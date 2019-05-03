@@ -2,14 +2,19 @@ package application.model;
 
 import application.Sound;
 
+import java.io.File;
+import java.util.Random;
+
 import application.Settings;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 /**
  * This class represents the player object
- * @author Torin Maguire - ztd721
+ * @author Torin Maguire - ztd721, Dayne Closser - ehh448
  *
  */
 public class PlayerModel extends Entity {
@@ -20,12 +25,39 @@ public class PlayerModel extends Entity {
 	
 	private double health;
 	
-	private Sound playerSound; //WIP
+	//Player damage sound 01
+	private String soundFile = "src/application/assets/sounds/Damage01.wav";
+	private Media dmgSound1 = new Media(new File(soundFile).toURI().toString());
+	private MediaPlayer mediaPlayer = new MediaPlayer(dmgSound1);
+	private Sound playerSound = new Sound( soundFile, dmgSound1, mediaPlayer );
+	//End player damage sound 01
+	
+	//Player damage sound 02
+	private String soundFile2 = "src/application/assets/sounds/Damage02.wav";
+	private Media dmgSound2 = new Media(new File(soundFile2).toURI().toString());
+	private MediaPlayer mediaPlayer2 = new MediaPlayer(dmgSound2);
+	private Sound playerSound2 = new Sound( soundFile2, dmgSound2, mediaPlayer2 );
+	//End player damage sound 02
+		
+	//Player damage sound 03
+	private String soundFile3 = "src/application/assets/sounds/Damage02.wav";
+	private Media dmgSound3 = new Media(new File(soundFile3).toURI().toString());
+	private MediaPlayer mediaPlayer3 = new MediaPlayer(dmgSound3);
+	private Sound playerSound3 = new Sound( soundFile3, dmgSound3, mediaPlayer3 );
+	//End player damage sound 03
+	
+	//Player damage sound 04
+	private String soundFile4 = "src/application/assets/sounds/Damage02.wav";
+	private Media dmgSound4 = new Media(new File(soundFile4).toURI().toString());
+	private MediaPlayer mediaPlayer4 = new MediaPlayer(dmgSound4);
+	private Sound playerSound4 = new Sound( soundFile4, dmgSound4, mediaPlayer4 );
+	//End player damage sound 04
 		
 	public PlayerModel(Pane layer, Image image, double x, double y, double speed, double health, Input input) {
 		
 		super(layer, image, x, y, speed);
 		
+		//this.playerSound = playerSound;
 		this.input = input;
 		this.health = health;
 		
@@ -152,15 +184,21 @@ public class PlayerModel extends Entity {
 		return Double.compare(health, 0) > 0;
 	}
 	
-	public void getDamagedBy(GhostModel ghostModel) {
-		if (health > 0) {
-			health -= ghostModel.getDamage();
+	public void getDamagedBy(GhostModel ghostModel)
+	{
+		if (health > 0)
+		{
+			health -= ghostModel.getDamage();			
 		}
 	}
 	
-	public void getHealedBy(PillowModel pillowModel) {
-		if (health < Settings.PLAYER_HEALTH) {
+	public void getHealedBy(PillowModel pillowModel)
+	{
+		if (health < Settings.PLAYER_HEALTH)
+		{
 			health += pillowModel.getHealing();
+			
+			//Play heal sound
 		}
 	}
 	
