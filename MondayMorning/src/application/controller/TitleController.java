@@ -4,8 +4,9 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.Level;
+import application.LevelModel;
 import application.Sound;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class TitleController implements Initializable
 {
@@ -43,7 +45,7 @@ public class TitleController implements Initializable
 		
 		Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		
-		Level levelOne = new Level();
+		LevelModel levelOne = new LevelModel();
 		
 		levelOne.start(stage);
 	}
@@ -58,7 +60,9 @@ public class TitleController implements Initializable
 		Sound titleSound = new Sound( musicFile, sound, mediaPlayer );
 		titleSound.playSound( 0 );
 		
-		Platform.exit();
+		PauseTransition delay = new PauseTransition(Duration.seconds(1));
+		delay.setOnFinished(event -> Platform.exit());
+		delay.play();
 	}
 
 	@Override

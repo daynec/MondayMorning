@@ -21,7 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class Level {
+public class LevelModel {
 	
 	private Random rnd = new Random();
 	
@@ -45,9 +45,9 @@ public class Level {
 	private Image pillowImage;
 	private Image backgroundImage;
 	
-	private Player player;
-	private ArrayList<Enemy> enemies = new ArrayList<>();
-	private ArrayList<Healer> healers = new ArrayList<>();
+	private PlayerModel playerModel;
+	private ArrayList<GhostModel> ghostModels = new ArrayList<>();
+	private ArrayList<PillowModel> pillowModels = new ArrayList<>();
 	
 	private Scene scene;
 	
@@ -77,7 +77,7 @@ public class Level {
 		
 		loadGame();
 		
-		painLoop = new Timeline(new KeyFrame(Duration.seconds(5), event ->  {player.setHealth(player.getHealth() - 10);}));
+		painLoop = new Timeline(new KeyFrame(Duration.seconds(5), event ->  {playerModel.setHealth(playerModel.getHealth() - 10);}));
 		timeLoop = new Timeline(new KeyFrame(Duration.seconds(1), event -> clockEvent()));
 		gameLoop = new Timeline(new KeyFrame(Duration.millis(50), event -> gameUpdateEvent()));
 		
@@ -94,7 +94,7 @@ public class Level {
 	private void clockEvent() {
 		
 		//Shuts down game if player wins or loses
-		if (player.getHealth() == 0 || currTime == 0) {
+		if (playerModel.getHealth() == 0 || currTime == 0) {
 			timeLoop.stop();
 			gameLoop.stop();
 			painLoop.stop();
@@ -120,24 +120,24 @@ public class Level {
 	
 	private void gameUpdateEvent() {
 		
-		player.processInput();
+		playerModel.processInput();
 		
 		createEnemies();
 		createHealers();
 		
-		player.move();
-		enemies.forEach(Enemy -> Enemy.pathToPlayer(player));
-		enemies.forEach(Enemy -> Enemy.move());
+		playerModel.move();
+		ghostModels.forEach(Enemy -> Enemy.pathToPlayer(playerModel));
+		ghostModels.forEach(Enemy -> Enemy.move());
 		
 		checkCollisions();
-		removeEnemies(enemies);
-		removeHealers(healers);
+		removeEnemies(ghostModels);
+		removeHealers(pillowModels);
 		
-		enemies.forEach(Entity -> Entity.updateUI());
-		player.updateUI();
+		ghostModels.forEach(Entity -> Entity.updateUI());
+		playerModel.updateUI();
 		updateInfo();
 		
-		if (player.getHealth() == 0) {
+		if (playerModel.getHealth() == 0) {
 			try {
 				Parent root = FXMLLoader.load(getClass().getResource("/application/view/YouLose.fxml"));
 				stage.setTitle("Monday Morning");
@@ -178,7 +178,7 @@ public class Level {
 	
 	private void updateInfo() {
 		
-		healthBar.setProgress(player.getHealth() / Settings.PLAYER_HEALTH);
+		healthBar.setProgress(playerModel.getHealth() / Settings.PLAYER_HEALTH);
 		
 	}
 	
@@ -201,17 +201,17 @@ public class Level {
 		double x = (Settings.SCENE_WIDTH - image.getWidth()) / 2.0;
 		double y = Settings.SCENE_HEIGHT * 0.7;
 		
-		player = new Player(levelLayer, image, x, y, Settings.PLAYER_SPEED, Settings.PLAYER_HEALTH, input);
+		playerModel = new PlayerModel(levelLayer, image, x, y, Settings.PLAYER_SPEED, Settings.PLAYER_HEALTH, input);
 		
 	}
 		
-	private void removeEnemies(ArrayList<Enemy> enemies) {
+	private void removeEnemies(ArrayList<GhostModel> ghostModels) {
 		
-		Iterator<Enemy> garbageList = enemies.iterator();
+		Iterator<GhostModel> garbageList = ghostModels.iterator();
 		
 		while (garbageList.hasNext()) {
 		
-			Enemy garbage = garbageList.next();
+			GhostModel garbage = garbageList.next();
 			
 			if (garbage.isRemovable()) {
 				
@@ -224,13 +224,13 @@ public class Level {
 		
 	}
 	
-private void removeHealers(ArrayList<Healer> healers) {
+private void removeHealers(ArrayList<PillowModel> pillowModels) {
 		
-		Iterator<Healer> garbageList = healers.iterator();
+		Iterator<PillowModel> garbageList = pillowModels.iterator();
 		
 		while (garbageList.hasNext()) {
 		
-			Healer garbage = garbageList.next();
+			PillowModel garbage = garbageList.next();
 			
 			if (garbage.isRemovable()) {
 				
@@ -245,7 +245,7 @@ private void removeHealers(ArrayList<Healer> healers) {
 	
 	private void createHealers() {
 		
-		if (rnd.nextInt(100) > 1 || healers.size() > 5) {
+		if (rnd.nextInt(100) > 1 || pillowModels.size() > 5) {
 			return;
 		}
 		
@@ -254,15 +254,15 @@ private void removeHealers(ArrayList<Healer> healers) {
 		double x = rnd.nextDouble() * Settings.SCENE_WIDTH - 20;
 		double y = rnd.nextDouble() * Settings.SCENE_HEIGHT;
 		
-		Healer pillow = new Healer(levelLayer, image, x, y, Settings.PILLOW_HEALING);
+		PillowModel pillowModel = new PillowModel(levelLayer, image, x, y, Settings.PILLOW_HEALING);
 		
-		healers.add(pillow);
+		pillowModels.add(pillowModel);
 		
 	}
 	
 	private void createEnemies() {
 		
-		if (rnd.nextInt(100) > 5 || enemies.size() > 10) {
+		if (rnd.nextInt(100) > 5 || ghostModels.size() > 10) {
 			return;
 		}
 		
@@ -270,9 +270,9 @@ private void removeHealers(ArrayList<Healer> healers) {
 		double x = ThreadLocalRandom.current().nextDouble(50 ,Settings.SCENE_WIDTH - 50);
 		double y = ThreadLocalRandom.current().nextDouble(50, Settings.SCENE_HEIGHT - 50);
 		
-		Enemy ghost = new Enemy(levelLayer, image, x, y, Settings.GHOST_SPEED, Settings.GHOST_DAMAGE);
+		GhostModel ghostModel = new GhostModel(levelLayer, image, x, y, Settings.GHOST_SPEED, Settings.GHOST_DAMAGE);
 				
-		enemies.add(ghost);
+		ghostModels.add(ghostModel);
 		
 	}
 	
@@ -280,29 +280,29 @@ private void removeHealers(ArrayList<Healer> healers) {
 		
 		collision = false;
 		
-		for (Healer healer : healers) {
+		for (PillowModel pillowModel : pillowModels) {
 			
-			if (player.collision(healer)) {
+			if (playerModel.collision(pillowModel)) {
 				
 				collision = true;
 				
-				player.getHealedBy(healer);
+				playerModel.getHealedBy(pillowModel);
 				
-				healer.setRemovable(true);
+				pillowModel.setRemovable(true);
 				
 			}
 			
 		}
 		
-		for (Enemy enemy: enemies) {
+		for (GhostModel ghostModel: ghostModels) {
 			
-			if (player.collision(enemy)) {
+			if (playerModel.collision(ghostModel)) {
 				
 				collision = true;
 				
-				player.getDamagedBy(enemy);
+				playerModel.getDamagedBy(ghostModel);
 				
-				enemy.setRemovable(true);
+				ghostModel.setRemovable(true);
 				
 			}
 			

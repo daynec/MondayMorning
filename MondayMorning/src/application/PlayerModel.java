@@ -8,7 +8,7 @@ import javafx.scene.layout.Pane;
  * @author Torin Maguire - ztd721
  *
  */
-public class Player extends Entity {
+public class PlayerModel extends Entity {
 
 	private double playerMinX, playerMinY, playerMaxX, playerMaxY;
 	
@@ -16,7 +16,7 @@ public class Player extends Entity {
 	
 	private double health;
 		
-	public Player(Pane layer, Image image, double x, double y, double speed, double health, Input input) {
+	public PlayerModel(Pane layer, Image image, double x, double y, double speed, double health, Input input) {
 		
 		super(layer, image, x, y, speed);
 		
@@ -146,15 +146,15 @@ public class Player extends Entity {
 		return Double.compare(health, 0) > 0;
 	}
 	
-	public void getDamagedBy(Enemy enemy) {
+	public void getDamagedBy(GhostModel ghostModel) {
 		if (health > 0) {
-			health -= enemy.getDamage();
+			health -= ghostModel.getDamage();
 		}
 	}
 	
-	public void getHealedBy(Healer pillow) {
+	public void getHealedBy(PillowModel pillowModel) {
 		if (health < Settings.PLAYER_HEALTH) {
-			health += pillow.getHealing();
+			health += pillowModel.getHealing();
 		}
 	}
 	

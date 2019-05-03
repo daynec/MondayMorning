@@ -3,11 +3,11 @@ package application;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
-public class Healer extends GameObject {
+public class PillowModel extends GameObject {
 	
 	private double healing;
 
-	public Healer(Pane layer, Image image, double x, double y, double healing) {
+	public PillowModel(Pane layer, Image image, double x, double y, double healing) {
 		
 		super(layer, image, x, y);
 		

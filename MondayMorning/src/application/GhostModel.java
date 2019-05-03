@@ -5,11 +5,11 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-public class Enemy extends Entity {
+public class GhostModel extends Entity {
 	
 	private double damage;
 		
-	public Enemy(Pane layer, Image image, double x, double y, double speed, double damage) {
+	public GhostModel(Pane layer, Image image, double x, double y, double speed, double damage) {
 		
 		super(layer, image, x, y, speed);
 		
@@ -36,9 +36,9 @@ public class Enemy extends Entity {
 		this.damage = damage;
 	}
 
-	public void pathToPlayer(Player player) {
-		dx = player.getX() - x;
-		dy = player.getY() - y;
+	public void pathToPlayer(PlayerModel playerModel) {
+		dx = playerModel.getX() - x;
+		dy = playerModel.getY() - y;
 		double norm = Math.sqrt(dx * dx + dy * dy);
 		if (norm != 0) {
 			dx *= (speed / norm);
