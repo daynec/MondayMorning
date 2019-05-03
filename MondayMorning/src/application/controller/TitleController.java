@@ -4,8 +4,9 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.LevelModel;
+import application.GameModel;
 import application.Sound;
+import application.view.GameView;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -45,9 +46,12 @@ public class TitleController implements Initializable
 		
 		Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		
-		LevelModel levelOne = new LevelModel();
+		GameModel model = new GameModel();
+		GameView view = new GameView();
+		GameController controller = new GameController(model, view);
 		
-		levelOne.start(stage);
+		view.initialize(stage, "Level One");
+		view.display();
 	}
 	
 	@FXML
@@ -60,7 +64,7 @@ public class TitleController implements Initializable
 		Sound titleSound = new Sound( musicFile, sound, mediaPlayer );
 		titleSound.playSound( 0 );
 		
-		PauseTransition delay = new PauseTransition(Duration.seconds(1));
+		PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
 		delay.setOnFinished(event -> Platform.exit());
 		delay.play();
 	}
