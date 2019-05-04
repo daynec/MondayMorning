@@ -14,7 +14,7 @@ public class Sound
 {
 	private String musicFile; 				//= "src/application/assets/sounds/UnderTheHotSun.mp3";
 	private Media sound; 					//= new Media(new File(musicFile).toURI().toString());
-	private static MediaPlayer mediaPlayer; //= new MediaPlayer(sound);
+	private MediaPlayer mediaPlayer; //= new MediaPlayer(sound);
 	
 	public Sound( String musicFile, Media sound, MediaPlayer mediaPlayer )
 	{
@@ -41,31 +41,4 @@ public class Sound
 	{
 		this.mediaPlayer.stop();
 	}
-	
-	/*public void playDamageSound()
-	{
-		//Choose a random number
-
-		Random rand = new Random();
-
-		// Obtain a number between [0 - 49].
-		int n = rand.nextInt(4);
-		
-		switch(n)
-		{
-			case 0: this.mediaPlayer.play(); // = "src/application/assets/sounds/Damage01.wav";
-					//this.playerSound.playSound( 0 );
-					break;
-			case 1: this.soundFile = "src/application/assets/sounds/Damage02.wav";
-					this.playerSound.playSound( 0 );
-					break;
-			case 2: this.soundFile = "src/application/assets/sounds/Damage03.wav";
-					this.playerSound.playSound( 0 );
-					break;
-			case 3: this.soundFile = "src/application/assets/sounds/Damage04.wav";
-					this.playerSound.playSound( 0 );
-					break;
-		}
-	}
-	*/
 }

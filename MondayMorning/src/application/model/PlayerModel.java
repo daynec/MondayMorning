@@ -26,10 +26,10 @@ public class PlayerModel extends Entity {
 	private double health;
 	
 	//Player damage sound 01
-	private String soundFile = "src/application/assets/sounds/Damage01.wav";
-	private Media dmgSound1 = new Media(new File(soundFile).toURI().toString());
+	private String soundFile1 = "src/application/assets/sounds/Damage01.wav";
+	private Media dmgSound1 = new Media(new File(soundFile1).toURI().toString());
 	private MediaPlayer mediaPlayer = new MediaPlayer(dmgSound1);
-	private Sound playerSound = new Sound( soundFile, dmgSound1, mediaPlayer );
+	private Sound playerSound = new Sound( soundFile1, dmgSound1, mediaPlayer );
 	//End player damage sound 01
 	
 	//Player damage sound 02
@@ -188,7 +188,46 @@ public class PlayerModel extends Entity {
 	{
 		if (health > 0)
 		{
-			health -= ghostModel.getDamage();			
+			health -= ghostModel.getDamage();	
+			
+			//Play damage sound
+			String soundFile1 = "src/application/assets/sounds/Damage01.wav";
+			String soundFile2 = "src/application/assets/sounds/Damage02.wav";
+			String soundFile3 = "src/application/assets/sounds/Damage03.wav";
+			String soundFile4 = "src/application/assets/sounds/Damage04.wav";
+			
+			Media dmgSound1 = new Media(new File(soundFile1).toURI().toString());
+			Media dmgSound2 = new Media(new File(soundFile2).toURI().toString());
+			Media dmgSound3 = new Media(new File(soundFile3).toURI().toString());
+			Media dmgSound4 = new Media(new File(soundFile4).toURI().toString());
+			
+			MediaPlayer mediaPlayerDMG1 = new MediaPlayer(dmgSound1);
+			MediaPlayer mediaPlayerDMG2 = new MediaPlayer(dmgSound2);
+			MediaPlayer mediaPlayerDMG3 = new MediaPlayer(dmgSound3);
+			MediaPlayer mediaPlayerDMG4 = new MediaPlayer(dmgSound4);
+			
+			Sound playerSound = null;
+			
+			//Choose a random number
+			Random rand = new Random();
+			// Obtain a number between [0 - 3].
+			int n = rand.nextInt(4);
+			
+			switch(n)
+			{
+				case 0: playerSound = new Sound( soundFile1, dmgSound1, mediaPlayerDMG1 );
+						playerSound.playSound( 0 );
+						break;
+				case 1: playerSound = new Sound( soundFile2, dmgSound2, mediaPlayerDMG2 );
+						playerSound.playSound( 0 );
+						break;
+				case 2: playerSound = new Sound( soundFile3, dmgSound3, mediaPlayerDMG3 );
+						playerSound.playSound( 0 );
+						break;
+				case 3: playerSound = new Sound( soundFile4, dmgSound4, mediaPlayerDMG4 );
+						playerSound.playSound( 0 );
+						break;
+			}
 		}
 	}
 	
@@ -199,6 +238,55 @@ public class PlayerModel extends Entity {
 			health += pillowModel.getHealing();
 			
 			//Play heal sound
+			String soundFile1 = "src/application/assets/sounds/Pickup1.wav";
+			String soundFile2 = "src/application/assets/sounds/Pickup2.wav";
+			String soundFile3 = "src/application/assets/sounds/Pickup3.wav";
+			String soundFile4 = "src/application/assets/sounds/Pickup4.wav";
+			String soundFile5 = "src/application/assets/sounds/Pickup5.wav";
+			String soundFile6 = "src/application/assets/sounds/Pickup6.wav";
+			
+			Media healSound1 = new Media(new File(soundFile1).toURI().toString());
+			Media healSound2 = new Media(new File(soundFile2).toURI().toString());
+			Media healSound3 = new Media(new File(soundFile3).toURI().toString());
+			Media healSound4 = new Media(new File(soundFile4).toURI().toString());
+			Media healSound5 = new Media(new File(soundFile5).toURI().toString());
+			Media healSound6 = new Media(new File(soundFile6).toURI().toString());
+			
+			MediaPlayer mediaPlayerHeal1 = new MediaPlayer(healSound1);
+			MediaPlayer mediaPlayerHeal2 = new MediaPlayer(healSound2);
+			MediaPlayer mediaPlayerHeal3 = new MediaPlayer(healSound3);
+			MediaPlayer mediaPlayerHeal4 = new MediaPlayer(healSound4);
+			MediaPlayer mediaPlayerHeal5 = new MediaPlayer(healSound5);
+			MediaPlayer mediaPlayerHeal6 = new MediaPlayer(healSound6);
+			
+			Sound playerSound = null;
+			
+			//Choose a random number
+			Random rand = new Random();
+			// Obtain a number between [0 - 3].
+			int n = rand.nextInt(6);
+			
+			switch(n)
+			{
+				case 0: playerSound = new Sound( soundFile1, healSound1, mediaPlayerHeal1 );
+						playerSound.playSound( 0 );
+						break;
+				case 1: playerSound = new Sound( soundFile2, healSound2, mediaPlayerHeal2 );
+						playerSound.playSound( 0 );
+						break;
+				case 2: playerSound = new Sound( soundFile3, healSound3, mediaPlayerHeal3 );
+						playerSound.playSound( 0 );
+						break;
+				case 3: playerSound = new Sound( soundFile4, healSound4, mediaPlayerHeal4 );
+						playerSound.playSound( 0 );
+						break;
+				case 4: playerSound = new Sound( soundFile5, healSound5, mediaPlayerHeal5 );
+						playerSound.playSound( 0 );
+						break;
+				case 5: playerSound = new Sound( soundFile6, healSound6, mediaPlayerHeal6 );
+						playerSound.playSound( 0 );
+						break;
+			}
 		}
 	}
 	
